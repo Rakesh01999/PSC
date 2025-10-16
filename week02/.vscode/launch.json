@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "d:/cp/PSC/week01",
-      "program": "d:/cp/PSC/week01/build/Debug/outDebug",
+      "cwd": "d:/cp/PSC/week02",
+      "program": "d:/cp/PSC/week02/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
