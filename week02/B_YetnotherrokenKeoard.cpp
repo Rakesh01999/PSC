@@ -1,48 +1,41 @@
 #include <iostream>
-#include <vector>
+#include <deque>
 using namespace std;
 
-bool isLower(char c) {
-    return c >= 'a' && c <= 'z';
-}
-
-bool isUpper(char c) {
-    return c >= 'A' && c <= 'Z';
-}
-
 int main() {
-    int t;
-    cin >> t;
+    int t; cin >> t;
     while (t--) {
-        string input;
-        cin >> input;
+        string input;cin >> input;
+        deque<char> typed;
+        deque<int> lower, upper;
 
-        vector<char> typed;
-
-        for (char ch : input) {
+        for (int i = 0; i < input.size(); ++i) {
+            char ch = input[i];
             if (ch == 'b') {
-                for (int i = typed.size() - 1; i >= 0; --i) {
-                    if (isLower(typed[i])) {
-                        typed.erase(typed.begin() + i);
-                        break;
-                    }
+                if (!lower.empty()) {
+                    int idx = lower.back();
+                    lower.pop_back();
+                    typed[idx] = '#'; 
                 }
             } else if (ch == 'B') {
-                for (int i = typed.size() - 1; i >= 0; --i) {
-                    if (isUpper(typed[i])) {
-                        typed.erase(typed.begin() + i);
-                        break;
-                    }
+                if (!upper.empty()) {
+                    int idx = upper.back();
+                    upper.pop_back();
+                    typed[idx] = '#'; 
                 }
             } else {
                 typed.push_back(ch);
+                if (islower(ch)) lower.push_back(typed.size() - 1);
+                else if (isupper(ch)) upper.push_back(typed.size() - 1);
             }
         }
 
-        for (char c : typed) cout << c;
-        cout << '\n';
+        for (char c : typed) {
+            if (c != '#') cout << c;
+        }
+        cout <<endl ;
     }
 
-    
+
     return 0;
 }
