@@ -1,9 +1,9 @@
 
 #include<bits/stdc++.h>
-#include<map>
 using namespace std;
 
 int main(){
+    
     int n;cin>>n;
     map<pair<int, int>, string>mp;
     while(n--){
