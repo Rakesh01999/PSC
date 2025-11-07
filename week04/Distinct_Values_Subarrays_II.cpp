@@ -16,7 +16,7 @@ int main() {
     ll total = 0;
     int left = 0;
 
-    for (int right = 0; right < n; ++right) {
+    for (int right = 0; right < n; right++) {
         freq[a[right]]++;
 
         while ((int)freq.size() > k) {
