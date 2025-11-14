@@ -41,3 +41,4 @@ int main() {
     for (auto x : ans) cout << x << " ";
     return 0;
 }
+
