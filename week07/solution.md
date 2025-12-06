@@ -191,4 +191,164 @@ O(1) extra space
 ---
 
 
+===
+
+
+# Yet another SOD problem
+
+---
+
+# ✅ **Problem Explanation**
+
+You are given many test cases.
+For each test case, you are given two integers:
+
+* **L**
+* **R**
+
+You must count how many numbers in the range **[L, R]** (inclusive) have:
+
+### **Sum of digits divisible by 3**
+
+Example:
+141 → 1+4+1 = 6 → divisible by 3 ✔
+140 → 1+4+0 = 5 → not divisible ✘
+139 → 1+3+9 = 13 → not divisible ✘
+
+So for range 139–141 → Answer = **1**
+
+---
+
+# 🧠 **How to Think About It**
+
+You cannot iterate from L to R because:
+
+* R ≤ 10¹⁸ (up to 18 digits)
+* T ≤ 10⁴ test cases
+
+Worst-case loop = 10⁴ × 10¹⁸ → impossible.
+
+We need a mathematical / digit-DP based solution.
+
+---
+
+# 🎯 **Key Observation (Important!)**
+
+Digit sum modulo 3 depends ONLY on:
+
+### **number % 3**
+
+Because:
+
+* (sum of digits) % 3 == number % 3
+
+This is a known property.
+
+So instead of checking digit-sum, we can simply check:
+
+```
+x is valid if (x % 3) == 0
+```
+
+Thus the problem becomes:
+
+> Count how many numbers in [L, R] are divisible by 3.
+
+---
+
+# 🔥 **Efficient Solution**
+
+Count of multiples of 3 in range [1, X] is:
+
+```
+floor(X / 3)
+```
+
+So count in [L, R]:
+
+```
+count = floor(R/3) - floor((L-1)/3)
+```
+
+Done in **O(1) per test case**.
+
+This works because numbers divisible by 3 occur every 3 steps:
+0, 3, 6, 9, ...
+
+---
+
+# ✅ **C++ Solution (Fastest, handles 10¹⁸)**
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+long long countDiv3(long long x) {
+    return x / 3;
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int T;
+    cin >> T;
+
+    while (T--) {
+        long long L, R;
+        cin >> L >> R;
+
+        long long ans = countDiv3(R) - countDiv3(L - 1);
+        cout << ans << "\n";
+    }
+    return 0;
+}
+```
+
+---
+
+# 📈 **Time Complexity**
+
+### Per Test Case:
+
+```
+O(1)
+```
+
+### For T test cases:
+
+```
+O(T)
+T ≤ 10^4 → extremely fast
+```
+
+---
+
+# 📦 **Space Complexity**
+
+```
+O(1)
+```
+
+No arrays, no DP table, constant extra space.
+
+---
+
+# ✔ Example Check
+
+Input:
+
+```
+139 141
+```
+
+Compute:
+
+* floor(141/3) = 47
+* floor(138/3) = 46
+
+Answer = 47 − 46 = **1** ✔
+
+---
+
 
