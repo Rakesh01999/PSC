@@ -503,3 +503,167 @@ Constant space.
 
 
 
+
+---
+
+# **Problem Title: XOR Equality**
+
+---
+
+# **Problem Statement (Simplified)**
+
+You are given an integer **N**.
+You must count how many integers **x** in the range:
+
+[
+0 \le x \le 2^N - 1
+]
+
+satisfy:
+
+[
+x \oplus (x+1) = (x+2) \oplus (x+3)
+]
+
+Where **⊕** denotes the bitwise XOR operator.
+
+Since the answer can be very large, return it **modulo 10⁹ + 7**.
+
+You need to answer **T** independent test cases.
+
+---
+
+# **How to Think About the Problem**
+
+### **1. Understand XOR of consecutive numbers**
+
+A known binary property:
+
+[
+x \oplus (x+1) = 2^{(\text{trailing_ones}(x) + 1)} - 1
+]
+
+The value depends **only on how many trailing 1s** are present in the binary form of x.
+
+Example:
+
+| x (binary) | trailing 1s | x ⊕ (x+1) |
+| ---------- | ----------- | --------- |
+| 1000       | 0           | 1         |
+| 0111       | 3           | 15        |
+
+---
+
+### **2. Compare Both Sides**
+
+We need:
+
+[
+\text{trailing_ones}(x) = \text{trailing_ones}(x+2)
+]
+
+By checking all binary cases for the last 2 bits, we get:
+
+| x mod 4 | binary ending | valid?    |
+| ------- | ------------- | --------- |
+| 0       | 00            | ✔ valid   |
+| 1       | 01            | ✖ invalid |
+| 2       | 10            | ✔ valid   |
+| 3       | 11            | ✖ invalid |
+
+So **valid x are exactly those where the last two bits are 00 or 10**,
+i.e., **x % 4 == 0 or x % 4 == 2**
+→ all even x.
+
+---
+
+### **3. Count of Even Numbers in Range [0, 2ᶰ - 1]**
+
+Half of the numbers in the range are even.
+
+Count =
+[
+\frac{2^N}{2} = 2^{N-1}
+]
+
+Except **N = 1** special case:
+
+Range = {0, 1} → only {0} is valid → answer = 1.
+
+Our formula also gives:
+
+[
+2^{1-1} = 1
+]
+
+So it works for all N ≥ 1.
+
+---
+
+# ✔ **Final Formula**
+
+[
+\boxed{\text{Answer} = 2^{N-1} \mod (10^9 + 7)}
+]
+
+---
+
+# **Solution Approach**
+
+1. Precompute powers of 2 modulo (10⁹+7) up to N = 100000.
+2. For each test case:
+
+   * Output `pow2[N - 1]`.
+
+---
+
+# **C++ Implementation**
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+const long long MOD = 1e9 + 7;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int T;
+    cin >> T;
+
+    int MAXN = 100000;
+    vector<long long> pow2(MAXN + 1);
+    pow2[0] = 1;
+
+    for (int i = 1; i <= MAXN; i++) {
+        pow2[i] = (pow2[i - 1] * 2) % MOD;
+    }
+
+    while (T--) {
+        long long N;
+        cin >> N;
+        cout << pow2[N - 1] % MOD << "\n";
+    }
+
+    return 0;
+}
+```
+
+---
+
+# **Complexity Analysis**
+
+### **Time Complexity**
+
+* Precomputation: **O(N)**
+* Each query: **O(1)**
+  → Total: **O(N + T)**
+
+### **Space Complexity**
+
+* Power array: **O(N)**
+
+---
+
+
