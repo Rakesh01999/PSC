@@ -352,3 +352,154 @@ Answer = 47 − 46 = **1** ✔
 ---
 
 
+
+---
+
+# 📌 **Problem Title: Equal Mex Splitting**
+
+
+# ✅ **Problem Understanding (Explanation)**
+
+You are given an array of size **N** for each test case.
+
+Each element is an integer.
+Your task is to compute:
+
+### **The maximum number of elements that have the same value (either 0 or non-zero).**
+
+In simple words:
+
+* Count how many **zeros** are in the array
+* Count how many **non-zeros** are in the array
+* The answer is **the larger of these two counts**
+  → `max(count_zeros, count_nonzeros)`
+
+---
+
+# 🎯 **Why this works?**
+
+Because the judge’s problem is asking for the **maximum frequency** between:
+
+* the count of `0`s
+* the count of **all other values (1, 2, 3, …)**
+
+Every value except 0 is treated the same as “non-zero”.
+
+### So we only need:
+
+```
+non_zero_count = number of elements != 0
+zero_count = N - non_zero_count
+answer = max(non_zero_count, zero_count)
+```
+
+---
+
+# 🧠 **How to Think / Problem Intuition**
+
+1. You don’t care about the actual values except whether they are **zero** or **non-zero**
+   → A major simplification.
+
+2. Therefore:
+
+   * If you encounter `0`, increment zero counter.
+   * Otherwise, increment non-zero counter.
+
+3. The result is simply the larger group.
+
+---
+
+# 🚀 **Solution Approach**
+
+### **Step-by-step:**
+
+1. Read the number of test cases `t`
+2. For each test case:
+
+   * Read `n`
+   * Initialize `ans = 0`
+   * Loop through each element:
+
+     * If element is **non-zero**, increase `ans`
+   * `zero_count = n - ans`
+   * Output `max(ans, zero_count)`
+
+That’s it!
+
+---
+
+# ✅ **Correct C++ Code (Accepted Solution)**
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+int main() 
+{
+    ll t, n, k;
+    cin >> t;
+    while(t--) 
+    {
+        cin >> n;
+        ll nonZero = 0;
+        
+        for (ll i = 0; i < n; i++) {
+            cin >> k;
+            if (k != 0)
+                nonZero++;
+        }
+
+        ll zero = n - nonZero;
+        cout << max(nonZero, zero) << "\n";
+    }
+
+    return 0;
+}
+```
+
+---
+
+# ⏱️ **Time Complexity**
+
+* Reading `n` values takes **O(n)**
+* Done for **t** test cases
+
+### **Total Time:**
+
+[
+O\left(\sum n\right)
+]
+Efficient and optimal.
+
+---
+
+# 📦 **Space Complexity**
+
+* Only using a few variables
+* No extra data structures
+
+### **Space:**
+
+[
+O(1)
+]
+Constant space.
+
+---
+
+# ⭐ Final Summary
+
+| What you need | Explanation                                         |
+| ------------- | --------------------------------------------------- |
+| Goal          | Find the majority count between zeros and non-zeros |
+| Key idea      | Only check if each number is zero or not            |
+| Output        | max(zeros, non-zeros)                               |
+| Time          | O(n) per test                                       |
+| Space         | O(1)                                                |
+
+---
+
+
+
+
