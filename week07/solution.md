@@ -1,6 +1,7 @@
 
 
 ---
+# Distinct Binary Strings
 
 # ✅ **Problem Understanding**
 
