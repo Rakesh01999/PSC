@@ -865,3 +865,197 @@ Efficient and optimal.
 
 ---
 
+
+
+
+
+---
+
+# **Problem Title: Minimum XOR After Removing At Most One Element**
+
+---
+
+# **Problem Statement (Simplified)**
+
+You are given **N integers**.
+You want to make the **XOR of all remaining elements as small as possible**.
+
+You are allowed to remove **at most one element** (or remove none).
+
+Find the **minimum possible XOR** after removing 0 or 1 element.
+
+---
+
+# **Understanding the XOR Behavior**
+
+Let:
+
+[
+T = A_1 \oplus A_2 \oplus \dots \oplus A_N
+]
+
+This is the XOR of **all elements**.
+
+If you remove some element ( A_i ), the new XOR becomes:
+
+[
+T' = T \oplus A_i
+]
+
+Why?
+Because:
+
+[
+T = (A_1 \oplus \dots \oplus A_i \oplus \dots \oplus A_N)
+]
+
+So:
+
+[
+T' = T \oplus A_i = (A_1 \oplus \dots \oplus A_i \oplus \dots \oplus A_N) \oplus A_i
+]
+
+Since:
+[
+A_i \oplus A_i = 0
+]
+
+Thus removing an element "cancels" its contribution.
+
+---
+
+# **Goal**
+
+We want:
+
+[
+\min\left(T,; T \oplus A_1,; T \oplus A_2,; \dots,; T \oplus A_N\right)
+]
+
+Because:
+
+* (T) = XOR without removing anything.
+* (T \oplus A_i) = XOR after removing Ai.
+
+This is extremely efficient to compute.
+
+---
+
+# **Key Insight**
+
+### We want the element Ai such that:
+
+[
+T \oplus A_i
+]
+
+is minimized.
+
+Direct brute force works because XOR is O(1).
+
+Thus:
+
+1. Compute T
+2. For each Ai compute T ⊕ Ai
+3. Take the minimum among all T ⊕ Ai and T
+
+---
+
+# **Why This Works Perfectly**
+
+You are only allowed to remove ONE element.
+Removing Ai changes XOR to exactly **T ⊕ Ai**.
+No trick, no greedy complications.
+
+This is the only possible XOR after removal.
+
+---
+
+# **Time Complexity**
+
+* Computing T: **O(N)**
+* Checking all T ⊕ Ai: **O(N)**
+
+Total per test: O(N)
+Total over all tests: O(3×10⁵), which is safe.
+
+Space: O(1).
+
+---
+
+# **C++ Solution (Optimal + Accepted)**
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int T;
+    cin >> T;
+
+    while (T--) {
+        int N;
+        cin >> N;
+
+        vector<int> A(N);
+        int totalXor = 0;
+
+        for (int i = 0; i < N; i++) {
+            cin >> A[i];
+            totalXor ^= A[i];
+        }
+
+        int ans = totalXor; // Case when we remove nothing
+
+        // Check removing each Ai
+        for (int x : A) {
+            ans = min(ans, totalXor ^ x);
+        }
+
+        cout << ans << "\n";
+    }
+
+    return 0;
+}
+```
+
+---
+
+# **Example Walkthrough**
+
+### Input:
+
+```
+4
+2 4 3 6
+```
+
+Total XOR = 2⊕4⊕3⊕6 = 3
+Try removing each:
+
+* Remove 2 → 3 ⊕ 2 = 1
+* Remove 4 → 3 ⊕ 4 = 7
+* Remove 3 → 3 ⊕ 3 = 0  ← Best
+* Remove 6 → 3 ⊕ 6 = 5
+
+Minimum = **0**
+
+---
+
+# **Final Answer**
+
+The minimum XOR after removing at most one element is:
+
+[
+\boxed{\min(T,; T \oplus A_1,; \dots,; T \oplus A_N)}
+]
+
+---
+
+
+
+
+
