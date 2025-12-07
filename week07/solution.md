@@ -1059,3 +1059,153 @@ The minimum XOR after removing at most one element is:
 
 
 
+
+---
+
+# ✅ **Problem Title: Xorry Pairs**
+
+---
+
+## **📘 Problem Summary**
+
+You are given an integer **X**.
+You must find two integers **A** and **B** such that:
+
+1. **A ⊕ B = X**
+2. **0 ≤ A ≤ B ≤ X**
+3. Among all valid pairs, the value **(B − A)** is **minimum**.
+
+If multiple pairs give the minimum difference, you may output **any** one of them.
+
+You must answer **T** test cases.
+
+---
+
+## **💡 Key Insight / How to Think**
+
+To minimize **B − A**, observe the XOR property:
+
+### ➤ If
+
+[
+A \oplus B = X
+]
+then every bit where **X has a 1**, A and B must differ.
+
+To make **B − A** as small as possible, A and B should differ **in as few high-value bits as possible**.
+
+This leads to the following crucial insight:
+
+### 🔥 Best Strategy:
+
+Let **P** = the largest power of two ≤ X
+(i.e., highest set bit of X → ( P = 2^{\lfloor\log_2 X\rfloor} ))
+
+Then choose:
+
+[
+B = P
+]
+[
+A = X - P
+]
+
+### Why this works?
+
+* **A ⊕ B = (X - P) ⊕ P = X**
+
+* The difference:
+  [
+  B - A = P - (X - P) = 2P - X
+  ]
+  is **minimal** because:
+
+* B uses only the highest bit.
+
+* A uses the remaining lower bits, ensuring the numbers are as close as possible.
+
+* This is mathematically proven to give minimal distance.
+
+---
+
+## ✔️ Example
+
+Let **X = 6 (110₂)**
+Largest power of 2 ≤ 6 is **4 (100₂)**
+
+→ A = 6 − 4 = 2
+→ B = 4
+
+Pair = **(2, 4)** → valid and minimum difference.
+
+---
+
+## **🧠 Solution Approach (Step-by-Step)**
+
+1. Read integer X.
+2. Compute the largest power of 2 ≤ X
+
+   * You can repeatedly divide by 2 OR use logarithms.
+3. Let:
+
+   * **P = 2^k** (highest set bit)
+   * **A = X – P**
+   * **B = P**
+4. Output **A B**
+
+This pair always satisfies:
+
+* A ⊕ B = X
+* Minimal difference
+
+---
+
+## **🔧 C++ Implementation (Your Accepted Solution)**
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int t;
+    cin >> t;
+    while(t--) {
+        long long x;
+        cin >> x;
+        
+        long long e = x, count = 0;
+        
+        // Find floor(log2(x))
+        while(e > 1) {
+            e /= 2;
+            count++;
+        }
+        
+        long long temp = pow(2, count);  // highest power of 2 <= x
+        
+        cout << x - temp << " " << temp << endl;
+    }
+}
+```
+
+---
+
+## **⏱️ Time Complexity**
+
+For each test case:
+
+* Highest bit calculation: **O(log X)**
+* Overall for T test cases: **O(T log X)**
+
+Given constraints, this is very fast.
+
+---
+
+## **📦 Space Complexity**
+
+Only constant extra variables → **O(1)**.
+
+---
+
+
+
