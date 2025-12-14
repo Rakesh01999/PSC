@@ -1,38 +1,30 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-
 #define ll long long
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-int main(){
-    ll n;cin>>n;
-    vector<ll> v1(n);
-    vector<ll> v2;
-    for (int i = 0; i < n; i++)
-    {
-        cin>>v1[i];
-    }
-    // sort(v1.begin(), v1.end());
+    int n;cin >> n;
 
-    ll k;cin>>k;
-    while (k--)
-    {
-        ll l, r;cin>>l>>r;
-        ll cnt = 0;
-        // while (l<=r)
-        // {
-            for (int i = 0; i < n; i++)
-            {
-                if (v1[i] >= l && v1[i] <= r)
-                {
-                    cnt++;
-                }
-            }        
-        // }
-        v2.push_back(cnt);
+    vector<ll> a(n);
+
+    for(int i = 0; i < n; i++) {
+        cin >> a[i];
     }
 
-    for(auto x:v2)
-        cout<<x<<" ";
-    cout<<endl;
+    sort(a.begin(), a.end());
+
+    int k;cin >> k;
+
+    while(k--) {
+        ll l, r;cin >> l >> r;
+
+        int count = upper_bound(a.begin(), a.end(), r) - lower_bound(a.begin(), a.end(), l);
+
+        cout << count << " ";
+    }
+
+
     return 0;
 }
