@@ -26,8 +26,7 @@ int main() {
             auto it = lower_bound(marbles.begin(), marbles.end(), x);
 
             if (it != marbles.end() && *it == x) {
-                cout << x << " found at " 
-                     << (it - marbles.begin() + 1) << "\n";
+                cout << x << " found at " << (it - marbles.begin() + 1) << "\n";
             } else {
                 cout << x << " not found\n";
             }
