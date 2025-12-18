@@ -11,19 +11,9 @@ int main(){
 
     int x;cin>>x;
     
-    auto it=lower_bound(arr.begin(), arr.end(), x);
-    if(it!=arr.end() && *it==x){
-        // cout<<"Element found at index: "<<(it - arr.begin())<<endl;
-        int idx = it - arr.begin();
-        int lowidx = idx-1;
-        int highidx = idx+1;
-        
-        cout<<arr[lowidx]<<" "<<arr[highidx]<<endl;
-
-    }
-    else{
-        cout<<"X"<<endl;
-    }
+    auto it=upper_bound(arr.begin(), arr.end(), x);
+    int ans = it-arr.begin();
+    cout<<ans<<endl;
     
     return 0;
 }
